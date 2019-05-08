@@ -3,7 +3,7 @@ version: "3"
 volumes:
   redis:
     driver: "local"
- 
+
 services:
   redis:
     image: redis:latest
@@ -22,4 +22,5 @@ services:
       - 9229:9229
     links:
       - redis
-    entrypoint: "npm start"
+    command:
+        sh -c 'npm i && npm start'
