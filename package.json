@@ -1,0 +1,26 @@
+{
+  "name": "perimeterx_test_rotemlevi",
+  "version": "1.0.0",
+  "description": "PerimeterX Task",
+  "main": "server.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint src/**/* server.js",
+    "test": "mocha --timeout 10000",
+    "start": "node ./server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "redis": "^2.8.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4"
+  }
+}
