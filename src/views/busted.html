@@ -2,12 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Home Page</title>
+    <title>Blocked</title>
     <link rel="shortcut icon" href="https://www.perimeterx.com/favicon.ico">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <style type="text/css">
         html {
             font-family: 'Montserrat', sans-serif;
@@ -19,7 +16,7 @@
         }
 
         hr {
-            height: 1.5px;
+            height: 2px;
             background-color: black;
         }
 
@@ -29,69 +26,22 @@
         }
 
         .body {
-            margin-top: 20%;
-        }
-
-        .body button {
-            background-color: #ed1d24;
-            border: none;
-            border-radius: 2px;
-            line-height: 36px;
-            padding: 0 16px;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        .body button a {
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .footer {
-            margin-top: 27%;
-        }
-
-        .footer p {
-            font-size: 10px;
+            margin-top: 10%;
         }
     </style>
-    <script type="text/javascript">
-        function setCookie(key, value) {
-            var expires = new Date();
-            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-        }
-
-        function getCookie(key) {
-            var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-            return keyValue ? keyValue[2] : null;
-        }
-        
-        //{"cookie":"eyJ2YWxpZGF0aW9uIjoiT0sifQ=="}
-        $(document).ready(function () {
-            $.get("http://eng-task.pxchk.net/api/v1/validate")
-                .done(function (cookieJson) {
-                    setCookie("_enforce", cookieJson);
-                });
-        });
-    </script>
 </head>
 
 <body>
     <section class="container">
-        <div class="header"><img class="logo"
-                src="https://d33wubrfki0l68.cloudfront.net/174dd098861e68f39cfc255bb1dfa6d9f2df8544/73808/assets/images/logo.png"
-                alt="PerimeterX Logo">
+        <div class="header"><img class="logo" src="https://datadome.co/wp-content/uploads/2016/02/robocog-1.png">
             <hr>
         </div>
         <div class="body">
-            <h1>Enjoy surfing internet, HUMAN!</h1>
-            <p> Thanks for using PerimeterX bot blocker product!</p>
-        </div>
-        <div class="footer">
-            <hr>
-            <p>Created by Daniel Kontorovskyi as a task given by PerimeterX during interviewing process (c) 2018</p>
-        </div>
+            <h1>You have been recognized by our system as a malicious bot, there for you are blocked from our services
+            </h1>
+            <p> If you think this is a mistake feel free to notify us about that .</p> <a
+                href='mailto:support@perimeterx.com'> Email us</a>
+
     </section>
 </body>
 

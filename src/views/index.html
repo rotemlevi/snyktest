@@ -4,7 +4,6 @@
 <head>
     <title>Home Page</title>
     <link rel="shortcut icon" href="https://www.perimeterx.com/favicon.ico">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -29,31 +28,10 @@
         }
 
         .body {
-            margin-top: 20%;
+            margin-top: 10%;
         }
 
-        .body button {
-            background-color: #ed1d24;
-            border: none;
-            border-radius: 2px;
-            line-height: 36px;
-            padding: 0 16px;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        .body button a {
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .footer {
-            margin-top: 27%;
-        }
-
-        .footer p {
-            font-size: 10px;
-        }
+    
     </style>
     <script type="text/javascript">
         function setCookie(key, value) {
@@ -66,12 +44,11 @@
             var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
             return keyValue ? keyValue[2] : null;
         }
-        
-        //{"cookie":"eyJ2YWxpZGF0aW9uIjoiT0sifQ=="}
+
         $(document).ready(function () {
             $.get("http://eng-task.pxchk.net/api/v1/validate")
                 .done(function (cookieJson) {
-                    setCookie("_enforce", cookieJson);
+                    setCookie("_enforce", JSON.stringify(cookieJson));
                 });
         });
     </script>
@@ -80,18 +57,13 @@
 <body>
     <section class="container">
         <div class="header"><img class="logo"
-                src="https://d33wubrfki0l68.cloudfront.net/174dd098861e68f39cfc255bb1dfa6d9f2df8544/73808/assets/images/logo.png"
-                alt="PerimeterX Logo">
+                src="https://d33wubrfki0l68.cloudfront.net/174dd098861e68f39cfc255bb1dfa6d9f2df8544/73808/assets/images/logo.png">
             <hr>
         </div>
         <div class="body">
-            <h1>Enjoy surfing internet, HUMAN!</h1>
-            <p> Thanks for using PerimeterX bot blocker product!</p>
+            <h1>You are a human and we love you.</h1>
         </div>
-        <div class="footer">
-            <hr>
-            <p>Created by Daniel Kontorovskyi as a task given by PerimeterX during interviewing process (c) 2018</p>
-        </div>
+
     </section>
 </body>
 

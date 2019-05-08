@@ -1,5 +1,6 @@
 module.exports = {
-  cacheMiddleware: require('./cacheCheck'),
-  exceptionHandlerMiddleware: require('./appExceptionHandler'),
-  maliciousDetectMiddleware: require('./maliciousReqValidation'),
+  cache: require('./cache'),
+  exceptionHandler: require('./exceptionHandler'),
+  botDetect: require('./botDetect'),
 };
+ 
