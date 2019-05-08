@@ -1,0 +1,25 @@
+version: "3"
+
+volumes:
+  redis:
+    driver: "local"
+ 
+services:
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+
+  node:
+    build:
+      context: ./
+    volumes:
+      - ./:/project/node-test-server
+    ports:
+      - 8080:8080
+      - 9229:9229
+    links:
+      - redis
+    entrypoint: "npm start"

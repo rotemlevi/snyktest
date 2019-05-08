@@ -1,15 +1,14 @@
-process.env['NODE_ENV'] = 'development';
-process.env['PORT'] = '4000';
-process.env['DEBUG_PORT'] = '9229';
-process.env['DS_API_HOST'] = 'http://eng-task.pxchk.net';
-process.env['CACHE_TTL_IN_SECS'] = '3600';
+process.env['PORT'] = process.env['PORT']  || '8080';
+process.env['DEBUG_PORT'] = process.env['DEBUG_PORT'] || '9229';
+process.env['DS_API_HOST'] = process.env['DS_API_HOST']  || 'http://eng-task.pxchk.net';
+process.env['CACHE_TTL_IN_SECS'] = process.env['CACHE_TTL_IN_SECS'] || '3600';
  
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const router = require('./src/router/routes');
 const app = express();
-const { PORT = 4000 } = process.env;
+const { PORT = 8080 } = process.env;
 const ejs = require('ejs');
 const { cache, exceptionHandler, botDetect } = require('./src/middlewares');
  
