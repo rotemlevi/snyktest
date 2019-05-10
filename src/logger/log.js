@@ -7,11 +7,7 @@ const {
     errors,
     metadata,
     json,
-    splat,
     combine,
-    timestamp,
-    printf,
-    colorize
 } = winston.format;
 
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
@@ -22,7 +18,7 @@ const errorPrinter = winston.format.printf(info => {
 
 const transports = [
     new winston.transports.File({
-        filename: path.resolve(logDirectory, 'tester.log'),
+        filename: path.resolve(logDirectory, 'error.log'),
         handleExceptions: true,
         json: true,
         maxsize: 5242880, //5MB

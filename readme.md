@@ -7,11 +7,11 @@ Extract the zip into a folder,
 
 ## Start the service with NPM
 
-run cmd as a administraor
+run cmd as an administraor
 npm install
 npm start
 
 ## Start the service with Docker
 
-run cmd as a administraor
+run cmd as an administraor
 docker-compose up
