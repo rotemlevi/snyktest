@@ -40,9 +40,20 @@ const getData = async (package) => {
 
 module.exports = async (package) => {
     let fileName = Path.join(process.cwd(), "temp", `${Date.now()}.xml`);
-    let writeStream = fs.createWriteStream(fileName, { flags : 'w', encoding: 'utf-8' });
-    let writer = xmlbuilder.streamWriter(writeStream, { pretty: true, width: 20 }); // pass a writable stream
-    const done = util.promisify(writer.stream.on).bind(writer);
+    let writeStream = fs.createWriteStream(fileName, {
+        flags: 'w',
+        encoding: 'utf-8'
+    });
+    let writer = xmlbuilder.streamWriter(writeStream, {
+        pretty: true,
+        //width: 20
+    });
+
+    const Done = () => new Promise((resolve, reject) => {
+        writeStream.on('finish', () => resolve("finished"));
+        writeStream.on('error', (err) => reject(err));
+    });
+    
     let root = xmlbuilder.create('root'); // build the XML document
     let circuler = {};
     let dep = await getData(package);
@@ -86,7 +97,9 @@ module.exports = async (package) => {
             });
         });
     }
+    var done = Done();
     root.end(writer); // call end to pass the XML document to the stream writer
-    var finish = await done('finish');
+    writeStream.end();
+    await done;
     return fileName;
 };
