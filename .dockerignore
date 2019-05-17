@@ -1,6 +1,8 @@
 /logs
 /npm-debug.log
 /node_modules
+/temp
+*.xml
 package-lock.json
 .gitignore
 .vscode
