@@ -1,4 +1,4 @@
-# Welcome to PerimeterX Task! By Rotem Levi
+# Welcome to Snyk Task! By Rotem Levi
   
 # Requirements
 

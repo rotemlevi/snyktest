@@ -18,8 +18,8 @@ services:
     volumes:
       - ./:/project/node-test-server
     ports:
-      - 8080:8080
-      - 9229:9229
+      - 3000:3000
+      #- 9229:9229
     links:
       - redis
     command:

@@ -1,6 +1,6 @@
 process.env['PORT'] = process.env['PORT'] || '3000';
 process.env['DEBUG_PORT'] = process.env['DEBUG_PORT'] || '9229';
-process.env['CACHE_TTL_IN_SECS'] = process.env['CACHE_TTL_IN_SECS'] || '3600';
+process.env['CACHE_TTL_IN_SECS'] = process.env['CACHE_TTL_IN_SECS'] || '604800';
 
 const express = require('express');
 const app = express();
@@ -9,7 +9,7 @@ const appRouter = require('./src/router/app');
 const ejs = require('ejs');
 const path = require('path');
 const { PORT = 3000 } = process.env;
-app.use('/static', express.static('public'));
+app.use('/static', express.static('static'));
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 app.set("views", path.join(__dirname, 'src', "views"));

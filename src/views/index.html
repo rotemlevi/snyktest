@@ -7,9 +7,12 @@
     <meta name="description" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../static/jquery-3.3.1.min.js"></script>
+    <script src="../static/loader.js"></script>
     <script src="../static/go.js"></script>
+    <link href="../static/loader.css" rel="stylesheet">
     <script>
         $(function () {
+
             var $G = go.GraphObject.make;
             var myDiagram = $G(go.Diagram, "dependencyDiagram", {
                 maxSelectionCount: 1, // users can select only one part at a time
@@ -68,14 +71,20 @@
             var model = $G(go.TreeModel);
 
             $("#load").click(function () {
-                var name = $("#name").val();
-                var version = $("#version").val();
+                model.nodeDataArray = [];
+               
+                $('.box').css("display", "")
+                $('.box').jmspinner('large');
+                var name = encodeURIComponent($("#name").val());
+                var version = encodeURIComponent($("#version").val());
                 $.get("../package/" + name + "/" + version + "/json", {
                         dataType: "json"
                     })
                     .done(function (response) {
                         model.nodeDataArray = response;
                         myDiagram.model = model;
+                    }).always(function () {
+                        $('.box').css("display", "none")
                     });
             });
 
@@ -84,6 +93,7 @@
 </head>
 
 <body>
+    <div class="box"></div>
     <label for="name">Package Name</label>
     <input id="name" type="text" value="express" />
     <label for="version">Package Version</label>

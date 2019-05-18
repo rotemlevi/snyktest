@@ -1,7 +1,7 @@
 {
-  "name": "perimeterx_test_rotemlevi",
+  "name": "snyk_test_rotemlevi",
   "version": "1.0.0",
-  "description": "PerimeterX Task",
+  "description": "Snyk Task",
   "main": "server.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/**/* server.js",

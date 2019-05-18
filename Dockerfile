@@ -5,12 +5,11 @@ RUN mkdir -p /project/node-test-server
 WORKDIR /project/node-test-server
 
 ENV NODE_ENV=development
-ENV PORT=8080
+ENV PORT=3000
 ENV DEBUG_PORT=9229
 
-ENV DS_API_HOST=http://eng-task.pxchk.net
 ENV REDIS_URI=redis://redis:6379
 
-ENV CACHE_TTL_IN_SECS=3600
+ENV CACHE_TTL_IN_SECS=604800
 
 EXPOSE ${PORT} ${DEBUG_PORT}

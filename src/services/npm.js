@@ -14,11 +14,11 @@ const Service = Axios.create({
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.8,he;q=0.6,de;q=0.4'
-    },
-    proxy: {
+    }
+    /*,proxy: {
         host: 'localhost',
         port: 8888
-    }
+    }*/
 });
 
 let globalCache = {};

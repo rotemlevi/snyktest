@@ -22,7 +22,7 @@ router.get('/:name/:version/:type', async (req, res) => {
         });
         if(req.params.type === "xml") res.status(200).sendFile(response);
         else res.status(200).json(response);
-        fs.unlink(fileName);
+        //fs.unlink(fileName);
     } catch (err) {
         res.status(500).send("failed to analyze package");
     }
