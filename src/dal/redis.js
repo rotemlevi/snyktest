@@ -1,6 +1,6 @@
 const redis = require('redis');
 const { promisify } = require('util');
-const { REDIS_URI = 'redis://redis:6379', CACHE_TTL_IN_SECS ='3600' } = process.env;
+const { REDIS_URI = 'redis://localhost:6379', CACHE_TTL_IN_SECS ='3600' } = process.env;
 const client = redis.createClient(REDIS_URI);
 const Logger = require('../logger/log');
 

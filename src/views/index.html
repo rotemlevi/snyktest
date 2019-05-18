@@ -1,70 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <title>Home Page</title>
-    <link rel="shortcut icon" href="https://www.perimeterx.com/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <meta charset="UTF-8">
+    <title>Fault Tree</title>
+    <meta name="description" content="A Fault Tree diagram showing gate shapes at each non-root node." />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Copyright 1998-2019 by Northwoods Software Corporation. -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <style type="text/css">
-        html {
-            font-family: 'Montserrat', sans-serif;
-        }
+    <script src="../static/go.js"></script>
+    <script id="code">
+        $(function () {
+            var $G = go.GraphObject.make;
+            var myDiagram = $G(go.Diagram, "myDiagramDiv", {
+                "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
+                layout: $G(go.TreeLayout, // specify a Diagram.layout that arranges trees
+                    {
+                        angle: 90,
+                        layerSpacing: 35
+                    })
+            });
+            // the template we defined earlier
+            myDiagram.nodeTemplate =
+                $G(go.Node, "Horizontal", {
+                        background: "#44CCFF"
+                    },
+                    $G(go.Picture, {
+                            margin: 10,
+                            width: 50,
+                            height: 50,
+                            background: "red"
+                        },
+                        new go.Binding("version")),
+                    $G(go.TextBlock, "Default Text", {
+                            margin: 12,
+                            stroke: "white",
+                            font: "bold 16px sans-serif"
+                        },
+                        new go.Binding("text", "name"))
+                );
 
-        .container {
-            margin: 0 auto;
-            width: 90%;
-        }
+            // define a Link template that routes orthogonally, with no arrowhead
+            myDiagram.linkTemplate =
+                $G(go.Link, {
+                        routing: go.Link.Orthogonal,
+                        corner: 5
+                    },
+                    $G(go.Shape, {
+                        strokeWidth: 3,
+                        stroke: "#555"
+                    })); // the link shape
 
-        hr {
-            height: 1.5px;
-            background-color: black;
-        }
+            var model = $G(go.TreeModel);
 
-        .header .logo {
-            height: 20%;
-            width: 20%;
-        }
+            $("#load").click(function () {
+                var name = $("#name").val();
+                var version = $("#version").val();
 
-        .body {
-            margin-top: 10%;
-        }
+                $.get("../package/" + name + "/" + version + "/json", {
+                        dataType: "json"
+                    })
+                    .done(function (response) {
+                        model.nodeDataArray = response;
+                        myDiagram.model = model;
+                    });
+            });
 
-    
-    </style>
-    <script type="text/javascript">
-        function setCookie(key, value) {
-            var expires = new Date();
-            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-        }
-
-        function getCookie(key) {
-            var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-            return keyValue ? keyValue[2] : null;
-        }
-
-        $(document).ready(function () {
-            $.get("http://eng-task.pxchk.net/api/v1/validate")
-                .done(function (cookieJson) {
-                    setCookie("_enforce", JSON.stringify(cookieJson));
-                });
         });
     </script>
 </head>
 
 <body>
-    <section class="container">
-        <div class="header"><img class="logo"
-                src="https://d33wubrfki0l68.cloudfront.net/174dd098861e68f39cfc255bb1dfa6d9f2df8544/73808/assets/images/logo.png">
-            <hr>
-        </div>
-        <div class="body">
-            <h1>You have passed the bot test, i suppose you are human</h1>
-        </div>
-
-    </section>
+    <label for="name">Package Name</label>
+    <input id="name" type="text" value="express" />
+    <label for="version">Package Version</label>
+    <input id="version" type="text" value="latest" />
+    <button id="load">load</button>
+    <div id="myDiagramDiv" style="background-color: #696969; border: solid 1px black; height: 1000px"></div>
 </body>
 
 </html>

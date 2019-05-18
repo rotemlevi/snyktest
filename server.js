@@ -9,13 +9,13 @@ const appRouter = require('./src/router/app');
 const ejs = require('ejs');
 const path = require('path');
 const { PORT = 3000 } = process.env;
-
+app.use('/static', express.static('public'));
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 app.set("views", path.join(__dirname, 'src', "views"));
 app.use('/package', packageRouter)
 app.use('/app', appRouter)
- 
+
 const server = app.listen(PORT, async() => {
    console.log(`Express running → PORT ${ server.address().port }`);
 });

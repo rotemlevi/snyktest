@@ -24,6 +24,7 @@
     "xmlbuilder": "^13.0.1"
   },
   "devDependencies": {
+    "axios-https-proxy-fix": "^0.17.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "eslint": "^5.16.0",
