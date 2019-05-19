@@ -1,5 +1,8 @@
  const crypto = require('crypto');
  const semver = require('semver')
+ const _ = require('lodash');
+ const fs = require('fs');
+ const util = require('util');
 
  const normalizeVersion = (version) => {
      let cleanVersion = version.toLowerCase();
@@ -11,7 +14,6 @@
          return cleanVersion;
      }
  };
-
  const getUrl = (packageName, packageVersion) => `${normalizeName(packageName)}/${normalizeVersion(packageVersion)}`;
  const normalizeName = (name) => {
      var temp = name.split('/');
@@ -21,6 +23,9 @@
  const generateGraphPackageKey = (package) => crypto.createHash('md5').update(`${package.name}:${package.version}`).digest('hex');
 
  module.exports = {
+     deleteFileAsyc: (file) => {
+         return util.promisify(fs.unlink).bind(fs)(file);
+     },
      normalizeVersion: normalizeVersion,
      getUrl: getUrl,
      normalizeName: normalizeName,
@@ -30,21 +35,11 @@
          writeStream.on('finish', () => resolve("finished"));
          writeStream.on('error', (err) => reject(err));
      }),
-     getParentPackage: (parent, defaultPackage) => {
-         let package = {
-             name: defaultPackage.name,
-             version: defaultPackage.version
-         }
-         try {
-             package.name = parent.attributes.nodes.name.value;
-             package.version = parent.attributes.nodes.version.value;
-         } catch (e) {}
-         return package;
-     },
      generateGraphPackageKey: generateGraphPackageKey,
      generateGraphPackage: (package, parentPackage) => {
          let packageKey = generateGraphPackageKey(package);
-         let parentPackageKey = generateGraphPackageKey(parentPackage)
+         let parentPackageKey = !_.isEmpty(parentPackage) ?
+             generateGraphPackageKey(parentPackage) : undefined;
          return {
              key: packageKey,
              name: package.name,
@@ -58,12 +53,13 @@
              resolve("finished");
          }
      }),
-     generatePackageTask: (package, parent, height) => {
+     generatePackageTask: (package, parentNode, parentPackage, height) => {
          return {
              name: package.name,
              version: normalizeVersion(package.version),
              url: getUrl(package.name, package.version),
-             parent: parent,
+             parentNode: parentNode,
+             parentPackage: parentPackage,
              height: height
          };
      }

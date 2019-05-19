@@ -15,3 +15,12 @@ npm start
 
 run cmd as an administraor
 docker-compose up
+
+## API
+
+http://localhost:3000/package/express/latest/xml
+http://localhost:3000/package/express/latest/json
+
+## User Interface
+
+http://localhost:3000/app/index.html
