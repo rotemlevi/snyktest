@@ -12,7 +12,6 @@
     <link href="../static/loader.css" rel="stylesheet">
     <script>
         $(function () {
-
             var $G = go.GraphObject.make;
             var myDiagram = $G(go.Diagram, "dependencyDiagram", {
                 maxSelectionCount: 1, // users can select only one part at a time
@@ -56,27 +55,23 @@
                         },
                         new go.Binding("text", "version"))
                 );
-
             // define a Link template that routes orthogonally, with no arrowhead
             myDiagram.linkTemplate =
                 $G(go.Link, {
-                        routing: go.Link.Orthogonal,
-                        corner: 5
-                    },
-                    $G(go.Shape, {
-                        strokeWidth: 3,
-                        stroke: "white"
-                    })); // the link shape
-
+                    routing: go.Link.Orthogonal,
+                    corner: 5
+                }, $G(go.Shape, { // the link shape
+                    strokeWidth: 3,
+                    stroke: "white"
+                }));
             var model = $G(go.TreeModel);
-
+            $('.box').css("display", "none");
+            $('.box').jmspinner('large');
             $("#load").click(function () {
                 model.nodeDataArray = [];
-               
                 $('.box').css("display", "")
-                $('.box').jmspinner('large');
-                var name = encodeURIComponent($("#name").val());
-                var version = encodeURIComponent($("#version").val());
+                let name = encodeURIComponent($("#name").val());
+                let version = encodeURIComponent($("#version").val());
                 $.get("../package/" + name + "/" + version + "/json", {
                         dataType: "json"
                     })
@@ -84,7 +79,7 @@
                         model.nodeDataArray = response;
                         myDiagram.model = model;
                     }).always(function () {
-                        $('.box').css("display", "none")
+                        $('.box').css("display", "none");
                     });
             });
 
