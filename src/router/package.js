@@ -2,13 +2,9 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-const {
-    exceptionHandler
-} = require('../middlewares');
+const { exceptionHandler } = require('../middlewares');
 const crawler = require('../crawler');
-const {
-    deleteFileAsyc
-} = require("../utils");
+const { deleteFileAsyc } = require("../utils");
 router.use(express.json());
 router.use(express.urlencoded({
     extended: false

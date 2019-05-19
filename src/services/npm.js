@@ -25,7 +25,7 @@ let globalCache = {};
 
 const getDependencies = async (package) => {
     let dep = {};
-    let url = getUrl(package.name, package.version);
+    let url = getUrl(package);
     try {
         var { data: { dependencies, devDependencies } } = await Service.get(url);
         dep = _.merge(dependencies, {});
