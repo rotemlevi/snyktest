@@ -12,11 +12,17 @@ const normalizeVersion = (package) => {
     return semverObject ? semverObject.raw : cleanVersion;
 };
 
+const createPackageNode = (packageTask) => packageTask.parentNode.ele('package', {
+    name: packageTask.name,
+    version: packageTask.version
+});
+
 const getUrl = (package) => `${normalizeName(package.name)}/${normalizeVersion(package)}`;
 const normalizeName = (name) => encodeURIComponent(name);
 const generateGraphPackageKey = (package) => crypto.createHash('md5').update(`${package.name}:${package.version}`).digest('hex');
 
 module.exports = {
+    createPackageNode: createPackageNode,
     normalizeVersion: normalizeVersion,
     getUrl: getUrl,
     normalizeName: normalizeName,
@@ -28,10 +34,11 @@ module.exports = {
         writeStream.on('finish', () => resolve("finished"));
         writeStream.on('error', (err) => reject(err));
     }),
-    generateGraphPackage: (package, parentPackage) => {
+    queueDrainAsync: (queue) => new Promise((resolve) => queue.drain = resolve),
+    createGraphPackage: (package) => {
         let packageKey = generateGraphPackageKey(package);
-        let parentPackageKey = !_.isEmpty(parentPackage) ?
-            generateGraphPackageKey(parentPackage) : undefined;
+        let parentPackageKey = !_.isEmpty(package.parentPackage) ?
+            generateGraphPackageKey(package.parentPackage) : undefined;
         return {
             key: packageKey,
             name: package.name,
@@ -40,12 +47,7 @@ module.exports = {
             version: package.version
         }
     },
-    queueDrain: (queue) => new Promise((resolve, reject) => {
-        queue.drain = function () {
-            resolve("finished");
-        }
-    }),
-    generatePackageTask: (package, parentNode, parentPackage, height) => {
+    createPackageTask: (package, parentNode, parentPackage, height) => {
         return {
             name: package.name,
             version: normalizeVersion(package),

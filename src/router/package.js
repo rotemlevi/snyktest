@@ -8,6 +8,8 @@ router.use(express.urlencoded({
 }));
 
 // App routes
-router.get('/:name/:version/:type', exceptionHandler, crawler);
+router.get('/:name/:version/:type', crawler);
 
+// Loogs errors and send message to client.
+router.use(exceptionHandler);
 module.exports = router;

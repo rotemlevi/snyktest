@@ -1,9 +1,11 @@
-const Axios = require('axios-https-proxy-fix');
 const { generateGraphPackageKey, validateDep, getUrl } = require("../utils");
+
+const Axios = require('axios-https-proxy-fix');
 const _ = require('lodash');
 const redisClient = require('../dal/redis');
+const baseURL = 'http://registry.npmjs.org/';
 const Service = Axios.create({
-    baseURL: 'http://registry.npmjs.org/',
+    baseURL: baseURL,
     timeout: 30000,
     headers: {
         'Host': 'registry.npmjs.org',
@@ -27,11 +29,11 @@ const getDependencies = async (package) => {
     let dep = {};
     let url = getUrl(package);
     try {
-        var { data: { dependencies, devDependencies } } = await Service.get(url);
+        let { data: { dependencies, devDependencies } } = await Service.get(url);
         dep = _.merge(dependencies, {});
     } catch (e) {
         Logger.error(`failed fatching package name: ${package.name}, version: ${package.version}`);
-        Logger.error(`failed fatching url: https://registry.npmjs.org/${url}`);
+        Logger.error(`failed fatching url: ${baseURL}${url}`);
         Logger.error(e.message);
     }
     return dep;
@@ -39,9 +41,9 @@ const getDependencies = async (package) => {
 
 module.exports = {
     getDependencies: async (package) => {
+        let dep = {};
         const cacheKey = generateGraphPackageKey(package);
         if (globalCache[cacheKey]) return globalCache[cacheKey];
-        let dep = {};
         let cachedVersion = await redisClient.getAsync(cacheKey);
         try {
             dep = JSON.parse(cachedVersion);
