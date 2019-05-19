@@ -15,11 +15,11 @@ const {
 
 const Crawller = class {
     constructor(config) {
-        this.package = config.package;
         this.cache = {};
+        this.package = config.package;
         this.type = config.type || "xml";
-        this.rootKey = generateGraphPackageKey(this.package);
         this.concurrency = config.concurrency || 10;
+        this.rootKey = generateGraphPackageKey(this.package);
         this.queue = Async.queue(this.Process.bind(this), this.concurrency);
         this.queue.empty = () => Logger.info('last task is pending');
         this.queue.saturated = () => Logger.info('queue limit reached');
@@ -52,7 +52,7 @@ const Crawller = class {
         });
         else if (this.type === "json") this.writer.val(generateGraphPackage(packageTask, packageTask.parentPackage));
         Logger.debug(`worker add package: ${packageTask.name}`);
-        if (this.cache[packageTask.name]) return;
+        if (this.cache[packageTask.name]) return; // we already got thie package as a depndency
         this.cache[packageTask.name] = true;
         _.each(dep, async (version, name) => {
             let packageDepTask = generatePackageTask({
