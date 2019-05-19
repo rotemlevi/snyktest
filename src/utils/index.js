@@ -5,7 +5,7 @@ const fs = require('fs');
 const util = require('util');
 
 const normalizeVersion = (package) => {
-    let cleanVersion = package.version; //.toLowerCase().replace("*", "latest");
+    let cleanVersion = package.version.toLowerCase().replace("*", "latest");
     if (package.name.charAt(0) === '@') return "*";
     if (cleanVersion === "latest") return "latest";
     let semverObject = semver.coerce(cleanVersion);
@@ -22,9 +22,9 @@ module.exports = {
     normalizeName: normalizeName,
     generateGraphPackageKey: generateGraphPackageKey,
     deleteFileAsyc: (file) => util.promisify(fs.unlink).bind(fs)(file),
-    delay: (time) => (result) => new Promise(resolve => setTimeout(() => resolve(result), time)),
+    delayAsync: (time) => (result) => new Promise(resolve => setTimeout(() => resolve(result), time)),
     validateDep: (dep) => Array.isArray(dep),
-    xmlWriterDone: (writeStream, cb) => new Promise((resolve, reject) => {
+    writerEndAsync: (writeStream) => new Promise((resolve, reject) => {
         writeStream.on('finish', () => resolve("finished"));
         writeStream.on('error', (err) => reject(err));
     }),
