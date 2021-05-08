@@ -17,7 +17,7 @@
     "express": "^4.16.4",
     "genx": "^1.2.3",
     "json-builder": "0.0.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "redis": "^2.8.0",
     "semver": "^6.0.0",
     "tree-model": "^1.0.7",
