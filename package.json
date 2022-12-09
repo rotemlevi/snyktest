@@ -14,7 +14,7 @@
     "axios": "^0.18.0",
     "cookie-parser": "^1.4.4",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "genx": "^1.2.3",
     "json-builder": "0.0.2",
     "lodash": "^4.17.11",
